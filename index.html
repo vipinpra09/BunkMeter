@@ -1,57 +1,758 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BunkMeter — Know Your Bunk Limit</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="BunkMeter helps students calculate attendance, estimate bunk limits, and create an attendance recovery plan for college."
+    >
+
+    <meta name="theme-color" content="#f4f7ff">
+
+    <title>BunkMeter — Know Your Bunk Limit</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
-<div id="app">
-  <header class="topbar"><div class="nav"><div class="brand"><div class="logo" aria-label="BunkMeter logo"><svg viewBox="0 0 40 40" role="img" aria-hidden="true"><path d="M5 14 20 5 35 14 20 22Z" fill="#fff"/><path d="M10 17v8c5 5 15 5 20 0v-8l-10 6Z" fill="#dceaff"/><path d="M20 24v8" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M9 32h22" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M12 28a9 9 0 0 1 16 0" fill="none" stroke="#ffbf47" stroke-width="3.5" stroke-linecap="round"/><path d="m20 28 5-6" stroke="#ffbf47" stroke-width="3.5" stroke-linecap="round"/></svg></div><span>Bunk<span style="color:#3978f6">Meter</span></span></div><div style="display:flex;align-items:center;gap:12px"><a class="cta back-home" href="?" style="padding:8px 12px;font-size:12px">← Home</a><span class="pill">● Free to use</span></div></div></header>
-  <main>
-    <section class="landing" id="home">
-      <div class="landing-hero">
-        <div><div class="eyebrow">Free student tool · No account needed</div><h1>Know your bunk limit.<br><span style="color:var(--blue)">Plan smarter.</span></h1><p>BunkMeter helps you understand how skipping lectures or a full college day affects your attendance—and how many lectures you may need to attend to recover. No login. No fees. Just useful calculations.</p><div class="cta-row"><a class="cta primary-cta" id="useFree" href="?page=calculator" target="_blank" rel="noopener noreferrer">Use it for free <span aria-hidden="true">&nbsp;→</span></a><a class="cta" href="#how-it-works">See how it works</a></div><p style="font-size:12px;margin-top:17px">✓ 100% free &nbsp; ✓ Works in your browser &nbsp; ✓ No attendance data uploaded</p></div>
-        <div class="hero-art"><svg viewBox="0 0 340 270" role="img" aria-label="BunkMeter graduation cap and attendance gauge illustration"><circle cx="170" cy="135" r="112" fill="light-dark(#eaf1ff,#1a2b4d)"/><rect x="77" y="88" width="186" height="132" rx="19" fill="light-dark(#ffffff,#172337)" stroke="light-dark(#d4e1fb,#354967)" stroke-width="2"/><rect x="95" y="106" width="150" height="95" rx="12" fill="light-dark(#f4f7ff,#202f46)"/><path d="M117 168a53 53 0 0 1 106 0" fill="none" stroke="light-dark(#d4deef,#3b4c66)" stroke-width="12" stroke-linecap="round"/><path d="M117 168a53 53 0 0 1 79-46" fill="none" stroke="#3978f6" stroke-width="12" stroke-linecap="round"/><path d="m170 166 31-36" stroke="#ffbf47" stroke-width="7" stroke-linecap="round"/><circle cx="170" cy="166" r="8" fill="#173a78"/><path d="M104 68 170 31 236 68 170 103Z" fill="#173a78"/><path d="M124 80v27c23 18 69 18 92 0V80l-46 26Z" fill="#3978f6"/><path d="M236 68v37" stroke="#ffbf47" stroke-width="4" stroke-linecap="round"/><circle cx="236" cy="110" r="7" fill="#ffbf47"/><rect x="213" y="210" width="75" height="28" rx="14" fill="#dcfce7" stroke="#86efac"/><text x="250" y="228" font-size="11" text-anchor="middle" font-weight="800" fill="#166534">ON TRACK</text></svg></div>
-      </div>
-      <div id="how-it-works"><h2 class="section-heading" style="margin-top:30px">How BunkMeter works</h2><div class="steps"><article class="step"><div class="step-num">1</div><h3>Enter your attendance</h3><p>Add lectures attended, total lectures held, and your required percentage. Type any target from your keyboard.</p></article><article class="step"><div class="step-num">2</div><h3>Choose lectures or days</h3><p>Simulate missing individual lectures, or switch to day mode and enter the total lectures scheduled per day.</p></article><article class="step"><div class="step-num">3</div><h3>Check the forecast</h3><p>See your projected percentage, bunk limit, and a recovery plan calculated from your projected attendance.</p></article></div></div>
-    </section>
-    <section id="calculator"><h2 class="section-heading">Here you can Calculate how your attendance will decrese if You do not attend Lectures</h2><p style="color:var(--muted);margin-top:-5px;margin-bottom:22px">Change the sample values to match your attendance. Results update automatically.</p>
-    <section class="hero"><div><div class="eyebrow">Your attendance, under control</div><h1>Calculate before you bunk.</h1><p>Choose your required attendance, enter your numbers, and compare your options.</p></div><div class="target-box"><label for="target">Required attendance</label><div class="target-input-wrap"><input id="target" type="number" min="1" max="100" step="0.5" value="75" inputmode="decimal" aria-label="Required attendance percentage"><span>%</span></div><div class="target-presets" aria-label="Quick attendance targets"><button type="button" data-target="65">65%</button><button type="button" data-target="75" class="selected">75%</button><button type="button" data-target="80">80%</button><button type="button" data-target="85">85%</button><button type="button" data-target="90">90%</button></div><small style="display:block;margin-top:7px;color:var(--muted);font-size:10px">Type any target from 1 to 100.</small></div></section>
-    <div class="layout">
-      <section class="card"><div class="card-head"><h2>Attendance details</h2><p>Enter Total and Attended Lectures from your Collage ERP.</p></div><div class="card-body">
-        <div class="field-grid"><div class="field"><label for="attended">Lectures attended</label><input id="attended" type="number" min="0" value="36"></div><div class="field"><label for="total">Total lectures held</label><input id="total" type="number" min="1" value="45"></div></div>
-        <div class="subsection mode-wrap"><span class="mode-label">What do you want to calculate?</span><div class="segmented"><button id="lectureMode" class="active" type="button">▤ &nbsp; By lectures</button><button id="dayMode" type="button">▦ &nbsp; By college days</button></div></div>
-        <div id="lectureFields"><div class="field"><label for="missLectures">Lectures you plan to miss</label><input id="missLectures" type="number" min="0" value="3"><small>How many individual lectures will you skip?</small></div><div class="subsection"><div class="field"><label for="attendLectures">Extra lectures you plan to attend</label><input id="attendLectures" type="number" min="0" value="0"><small>Optional: estimate attendance after upcoming lectures.</small></div></div></div>
-        <div id="dayFields" class="hidden"><div class="field-grid"><div class="field"><label for="perDay">Total lectures in one day</label><input id="perDay" type="number" min="1" value="8"><small>Lectures scheduled per college day.</small></div><div class="field"><label for="missDays">College days you plan to miss</label><input id="missDays" type="number" min="0" value="1"><small>Full days absent.</small></div></div><div class="subsection"><div class="field"><label for="attendDays">Full days you plan to attend</label><input id="attendDays" type="number" min="0" value="0"><small>Optional: days attended with all scheduled lectures.</small></div></div></div>
-        <button class="primary" id="calculate" type="button">Calculate my attendance →</button>
-      </div></section>
-      <section class="card"><div class="card-head"><h2>Your attendance forecast</h2><p>Results update when you calculate.</p></div><div class="results"><div class="result-top"><div><h2 id="resultTitle">After missing 3 lectures</h2><p id="resultSub">Your projected attendance</p></div><span id="status" class="status">Above minimum</span></div><div id="percentage" class="big-number good">75.00%</div><div class="progress"><div id="progressFill" class="progress-fill" style="width:75%"></div></div><div class="progress-labels"><span>0%</span><span id="targetLabel">Required: 75%</span><span>100%</span></div>
-        <div class="metrics"><div class="metric"><span>Current attendance</span><strong id="currentMetric">80.00%</strong></div><div class="metric"><span>Maximum more lectures you can miss now</span><strong id="maxMissMetric">3</strong></div><div class="metric"><span>Projected lectures attended</span><strong id="attendedMetric">36 / 48</strong></div><div class="metric"><span>Attendance gap to target</span><strong id="gapMetric">0.00%</strong></div></div>
-        <div id="advice" class="advice"><strong>You're within your limit.</strong>Your projected attendance stays at or above your selected minimum.</div>
-        <div class="recovery"><h3>Quick recovery summary</h3><p id="recoveryText">Enter your desired attendance goal below to calculate how many lectures and college days you need.</p></div>
-        <p class="note">Assumes every lecture has equal weight. Day mode assumes the same number of lectures each day and that you attend or miss all of them. Follow your college's official attendance rules.</p>
-      </div></section>
+    <div id="app">
+
+        <!-- Navigation -->
+        <header class="topbar">
+            <nav class="nav" aria-label="Main navigation">
+
+                <a class="brand" href="#home" aria-label="BunkMeter home">
+                    <div class="logo" aria-hidden="true">
+                        <svg viewBox="0 0 40 40">
+                            <path d="M5 14 20 5 35 14 20 22Z" fill="#fff"/>
+                            <path d="M10 17v8c5 5 15 5 20 0v-8l-10 6Z" fill="#dceaff"/>
+                            <path
+                                d="M20 24v8 M9 32h22"
+                                stroke="#fff"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M12 28a9 9 0 0 1 16 0"
+                                fill="none"
+                                stroke="#ffbf47"
+                                stroke-width="3.5"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="m20 28 5-6"
+                                stroke="#ffbf47"
+                                stroke-width="3.5"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <span>Bunk<span style="color:#3978f6">Meter</span></span>
+                </a>
+
+                <div class="nav-actions">
+                    <a class="cta back-home" href="#home">
+                        ← Home
+                    </a>
+
+                    <span class="pill">● Free to use</span>
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+
+            <!-- Landing Page -->
+            <section class="landing" id="home">
+
+                <div class="landing-hero">
+
+                    <div class="landing-content">
+                        <div class="eyebrow">
+                            Free student tool · No account needed
+                        </div>
+
+                        <h1>
+                            Know your bunk limit.<br>
+                            <span style="color:var(--blue)">Plan smarter.</span>
+                        </h1>
+
+                        <p>
+                            BunkMeter helps you understand how skipping lectures
+                            or a full college day affects your attendance—and
+                            how many lectures you may need to attend to recover.
+                            No login. No fees. Just useful calculations.
+                        </p>
+
+                        <div class="cta-row">
+                            <a
+                                class="cta primary-cta"
+                                id="useFree"
+                                href="#calculator"
+                            >
+                                Use it for free
+                                <span aria-hidden="true">→</span>
+                            </a>
+
+                            <a class="cta" href="#how-it-works">
+                                See how it works
+                            </a>
+                        </div>
+
+                        <p class="landing-note">
+                            ✓ 100% free
+                            &nbsp; ✓ Works in your browser
+                            &nbsp; ✓ No attendance data uploaded
+                        </p>
+                    </div>
+
+                    <div class="hero-art">
+                        <svg
+                            viewBox="0 0 340 270"
+                            role="img"
+                            aria-label="Graduation cap and attendance gauge"
+                        >
+                            <circle
+                                cx="170"
+                                cy="135"
+                                r="112"
+                                fill="light-dark(#eaf1ff,#1a2b4d)"
+                            />
+
+                            <rect
+                                x="77"
+                                y="88"
+                                width="186"
+                                height="132"
+                                rx="19"
+                                fill="light-dark(#ffffff,#172337)"
+                                stroke="light-dark(#d4e1fb,#354967)"
+                                stroke-width="2"
+                            />
+
+                            <rect
+                                x="95"
+                                y="106"
+                                width="150"
+                                height="95"
+                                rx="12"
+                                fill="light-dark(#f4f7ff,#202f46)"
+                            />
+
+                            <path
+                                d="M117 168a53 53 0 0 1 106 0"
+                                fill="none"
+                                stroke="light-dark(#d4deef,#3b4c66)"
+                                stroke-width="12"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M117 168a53 53 0 0 1 79-46"
+                                fill="none"
+                                stroke="#3978f6"
+                                stroke-width="12"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="m170 166 31-36"
+                                stroke="#ffbf47"
+                                stroke-width="7"
+                                stroke-linecap="round"
+                            />
+
+                            <circle cx="170" cy="166" r="8" fill="#173a78"/>
+
+                            <path d="M104 68 170 31 236 68 170 103Z" fill="#173a78"/>
+                            <path d="M124 80v27c23 18 69 18 92 0V80l-46 26Z" fill="#3978f6"/>
+
+                            <path
+                                d="M236 68v37"
+                                stroke="#ffbf47"
+                                stroke-width="4"
+                                stroke-linecap="round"
+                            />
+
+                            <circle cx="236" cy="110" r="7" fill="#ffbf47"/>
+
+                            <rect
+                                x="213"
+                                y="210"
+                                width="75"
+                                height="28"
+                                rx="14"
+                                fill="#dcfce7"
+                                stroke="#86efac"
+                            />
+
+                            <text
+                                x="250"
+                                y="228"
+                                font-size="11"
+                                text-anchor="middle"
+                                font-weight="800"
+                                fill="#166534"
+                            >
+                                ON TRACK
+                            </text>
+                        </svg>
+                    </div>
+
+                </div>
+
+                <!-- How It Works -->
+                <section id="how-it-works">
+                    <h2 class="section-heading" style="margin-top:30px">
+                        How BunkMeter Works
+                    </h2>
+
+                    <div class="steps">
+
+                        <article class="step">
+                            <div class="step-num">1</div>
+
+                            <h3>Enter Your Attendance</h3>
+
+                            <p>
+                                Add lectures attended, total lectures held,
+                                and your required attendance percentage.
+                                Enter any target you need.
+                            </p>
+                        </article>
+
+                        <article class="step">
+                            <div class="step-num">2</div>
+
+                            <h3>Choose Lectures or Days</h3>
+
+                            <p>
+                                Simulate missing individual lectures, or switch
+                                to day mode and enter the number of lectures
+                                scheduled per day.
+                            </p>
+                        </article>
+
+                        <article class="step">
+                            <div class="step-num">3</div>
+
+                            <h3>Check Your Forecast</h3>
+
+                            <p>
+                                View your projected attendance, remaining
+                                bunk allowance, and recovery plan.
+                            </p>
+                        </article>
+
+                    </div>
+                </section>
+
+            </section>
+
+            <!-- Attendance Calculator -->
+            <section id="calculator">
+
+                <h2 class="section-heading">
+                    Calculate Your Attendance
+                </h2>
+
+                <p class="section-description">
+                    Change the sample values to match your attendance.
+                    Results update automatically.
+                </p>
+
+                <!-- Attendance Target -->
+                <section class="hero">
+
+                    <div>
+                        <div class="eyebrow">
+                            Your attendance, under control
+                        </div>
+
+                        <h1>Calculate Before You Bunk.</h1>
+
+                        <p>
+                            Choose your required attendance, enter your
+                            numbers, and compare your options.
+                        </p>
+                    </div>
+
+                    <div class="target-box">
+                        <label for="target">
+                            Required Attendance (ST1/ST2/PUT)
+                        </label>
+
+                        <div class="target-input-wrap">
+                            <input
+                                id="target"
+                                type="number"
+                                min="1"
+                                max="100"
+                                step="0.5"
+                                value="75"
+                                inputmode="decimal"
+                                aria-label="Required attendance percentage"
+                            >
+
+                            <span>%</span>
+                        </div>
+
+                        <div
+                            class="target-presets"
+                            aria-label="Quick attendance targets"
+                        >
+                            <button type="button" data-target="65">65%</button>
+                            <button
+                                type="button"
+                                data-target="75"
+                                class="selected"
+                            >
+                                75%
+                            </button>
+                            <button type="button" data-target="80">80%</button>
+                            <button type="button" data-target="85">85%</button>
+                            <button type="button" data-target="90">90%</button>
+                        </div>
+
+                        <small class="field-hint">
+                            Enter any target between 1 and 100.
+                        </small>
+                    </div>
+
+                </section>
+
+                <div class="layout">
+
+                    <!-- Attendance Input Card -->
+                    <section class="card">
+
+                        <div class="card-head">
+                            <h2>Attendance Details</h2>
+
+                            <p>
+                                Enter total and attended lectures from
+                                your college ERP.
+                            </p>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="field-grid">
+
+                                <div class="field">
+                                    <label for="attended">
+                                        Lectures Attended
+                                    </label>
+
+                                    <input
+                                        id="attended"
+                                        type="number"
+                                        min="0"
+                                        value="36"
+                                    >
+                                </div>
+
+                                <div class="field">
+                                    <label for="total">
+                                        Total Lectures Held
+                                    </label>
+
+                                    <input
+                                        id="total"
+                                        type="number"
+                                        min="1"
+                                        value="45"
+                                    >
+                                </div>
+
+                            </div>
+
+                            <!-- Calculation Mode -->
+                            <div class="subsection mode-wrap">
+
+                                <span class="mode-label">
+                                    What do you want to calculate?
+                                </span>
+
+                                <div class="segmented">
+                                    <button
+                                        id="lectureMode"
+                                        class="active"
+                                        type="button"
+                                        aria-pressed="true"
+                                    >
+                                        ▤ &nbsp; By Lectures
+                                    </button>
+
+                                    <button
+                                        id="dayMode"
+                                        type="button"
+                                        aria-pressed="false"
+                                    >
+                                        ▦ &nbsp; By College Days
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- Lecture Mode -->
+                            <div id="lectureFields">
+
+                                <div class="field">
+                                    <label for="missLectures">
+                                        Lectures You Plan to Miss
+                                    </label>
+
+                                    <input
+                                        id="missLectures"
+                                        type="number"
+                                        min="0"
+                                        value="3"
+                                    >
+
+                                    <small>
+                                        How many individual lectures will you skip?
+                                    </small>
+                                </div>
+
+                                <div class="subsection">
+                                    <div class="field">
+                                        <label for="attendLectures">
+                                            Extra Lectures You Plan to Attend
+                                        </label>
+
+                                        <input
+                                            id="attendLectures"
+                                            type="number"
+                                            min="0"
+                                            value="0"
+                                        >
+
+                                        <small>
+                                            Optional: estimate attendance after
+                                            upcoming lectures.
+                                        </small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- College Day Mode -->
+                            <div id="dayFields" class="hidden">
+
+                                <div class="field-grid">
+
+                                    <div class="field">
+                                        <label for="perDay">
+                                            Total Lectures in One Day
+                                        </label>
+
+                                        <input
+                                            id="perDay"
+                                            type="number"
+                                            min="1"
+                                            value="8"
+                                        >
+
+                                        <small>
+                                            Lectures scheduled per college day.
+                                        </small>
+                                    </div>
+
+                                    <div class="field">
+                                        <label for="missDays">
+                                            College Days You Plan to Miss
+                                        </label>
+
+                                        <input
+                                            id="missDays"
+                                            type="number"
+                                            min="0"
+                                            value="1"
+                                        >
+
+                                        <small>Full days absent.</small>
+                                    </div>
+
+                                </div>
+
+                                <div class="subsection">
+                                    <div class="field">
+                                        <label for="attendDays">
+                                            Full Days You Plan to Attend
+                                        </label>
+
+                                        <input
+                                            id="attendDays"
+                                            type="number"
+                                            min="0"
+                                            value="0"
+                                        >
+
+                                        <small>
+                                            Optional: days attended with all
+                                            scheduled lectures.
+                                        </small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="primary"
+                                id="calculate"
+                                type="button"
+                            >
+                                Calculate My Attendance →
+                            </button>
+
+                        </div>
+                    </section>
+
+                    <!-- Attendance Results Card -->
+                    <section class="card">
+
+                        <div class="card-head">
+                            <h2>Your Attendance Forecast</h2>
+
+                            <p>
+                                Results update when you change your details.
+                            </p>
+                        </div>
+
+                        <div class="results">
+
+                            <div class="result-top">
+                                <div>
+                                    <h2 id="resultTitle">
+                                        After Missing 3 Lectures
+                                    </h2>
+
+                                    <p id="resultSub">
+                                        Your projected attendance
+                                    </p>
+                                </div>
+
+                                <span id="status" class="status">
+                                    Above minimum
+                                </span>
+                            </div>
+
+                            <div
+                                id="percentage"
+                                class="big-number good"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
+                                75.00%
+                            </div>
+
+                            <div
+                                class="progress"
+                                role="progressbar"
+                                aria-label="Projected attendance percentage"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                aria-valuenow="75"
+                            >
+                                <div
+                                    id="progressFill"
+                                    class="progress-fill"
+                                    style="width:75%"
+                                ></div>
+                            </div>
+
+                            <div class="progress-labels">
+                                <span>0%</span>
+                                <span id="targetLabel">Required: 75%</span>
+                                <span>100%</span>
+                            </div>
+
+                            <div class="metrics">
+
+                                <div class="metric">
+                                    <span>Current Attendance</span>
+                                    <strong id="currentMetric">80.00%</strong>
+                                </div>
+
+                                <div class="metric">
+                                    <span>
+                                        Maximum More Lectures You Can Miss Now
+                                    </span>
+                                    <strong id="maxMissMetric">3</strong>
+                                </div>
+
+                                <div class="metric">
+                                    <span>Projected Lectures Attended</span>
+                                    <strong id="attendedMetric">36 / 48</strong>
+                                </div>
+
+                                <div class="metric">
+                                    <span>Attendance Gap to Target</span>
+                                    <strong id="gapMetric">0.00%</strong>
+                                </div>
+
+                            </div>
+
+                            <div id="advice" class="advice">
+                                <strong>You're within your limit.</strong>
+                                Your projected attendance stays at or above
+                                your selected minimum.
+                            </div>
+
+                            <div class="recovery">
+                                <h3>Quick Recovery Summary</h3>
+
+                                <p id="recoveryText">
+                                    Enter your desired attendance goal below
+                                    to calculate how many lectures and college
+                                    days you need.
+                                </p>
+                            </div>
+
+                            <p class="note">
+                                Assumes every lecture has equal weight.
+                                Day mode assumes the same number of lectures
+                                each day and that you attend or miss all of them.
+                                Follow your college's official attendance rules.
+                            </p>
+
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- Attendance Recovery Planner -->
+                <section
+                    class="card"
+                    id="recoveryPlanner"
+                    style="margin-top:22px"
+                >
+
+                    <div class="card-head">
+                        <h2>Attendance Recovery Planner</h2>
+
+                        <p>
+                            Set your goal and daily lecture schedule to estimate
+                            how quickly you can reach it.
+                        </p>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="field-grid">
+
+                            <div class="field">
+                                <label for="goalAttendance">
+                                    Desired Attendance Goal (%)
+                                </label>
+
+                                <input
+                                    id="goalAttendance"
+                                    type="number"
+                                    min="1"
+                                    max="100"
+                                    step="0.5"
+                                    value="75"
+                                    inputmode="decimal"
+                                >
+
+                                <small>
+                                    Enter your target, such as 80 or 85.
+                                </small>
+                            </div>
+
+                            <div class="field">
+                                <label for="recoveryPerDay">
+                                    Lectures You Can Attend Per Day
+                                </label>
+
+                                <input
+                                    id="recoveryPerDay"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    value="8"
+                                    inputmode="numeric"
+                                >
+
+                                <small>
+                                    Count only lectures that actually take place.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <button
+                            class="primary"
+                            id="planRecovery"
+                            type="button"
+                        >
+                            Calculate My Recovery Plan →
+                        </button>
+
+                        <div class="metrics" aria-live="polite">
+
+                            <div class="metric">
+                                <span>Additional Lectures to Attend</span>
+                                <strong id="recoveryLecturesResult">—</strong>
+                            </div>
+
+                            <div class="metric">
+                                <span>College Days Required</span>
+                                <strong id="recoveryDaysResult">—</strong>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="advice"
+                            id="recoveryPlannerMessage"
+                            aria-live="polite"
+                        >
+                            <strong>Your plan will appear here.</strong>
+                            Enter your desired target and daily lecture count.
+                        </div>
+
+                        <p class="note">
+                            The estimate starts from your projected attendance,
+                            including planned absences and upcoming lectures.
+                            It assumes you attend every counted lecture during
+                            recovery, each lecture has equal weight, and the
+                            daily lecture count stays consistent.
+                        </p>
+
+                    </div>
+                </section>
+
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <strong>BunkMeter</strong>
+            <span> · Know Your Bunk Limit · </span>
+
+            <div class="footer-credit">
+                Created by
+                <a
+                    href="https://in.linkedin.com/in/vipinprajapati7348"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Vipin Prajapati
+                </a>
+            </div>
+        </footer>
+
     </div>
-    <section class="card" id="recoveryPlanner" style="margin-top:22px">
-      <div class="card-head"><h2>Attendance Recovery Planner</h2><p>Set your goal and daily lecture schedule to estimate how quickly you can reach it.</p></div>
-      <div class="card-body">
-        <div class="field-grid">
-          <div class="field"><label for="goalAttendance">Desired attendance goal (%)</label><input id="goalAttendance" type="number" min="1" max="100" step="0.5" value="75" inputmode="decimal"><small>Type your own target, such as 80 or 85.</small></div>
-          <div class="field"><label for="recoveryPerDay">Lectures you can attend per day</label><input id="recoveryPerDay" type="number" min="1" step="1" value="8" inputmode="numeric"><small>Count only lectures that actually take place.</small></div>
-        </div>
-        <button class="primary" id="planRecovery" type="button">Calculate my Recovery plan →</button>
-        <div class="metrics" aria-live="polite">
-          <div class="metric"><span>Additional Lectures to attend</span><strong id="recoveryLecturesResult">—</strong></div>
-          <div class="metric"><span>College days required</span><strong id="recoveryDaysResult">—</strong></div>
-        </div>
-        <div class="advice" id="recoveryPlannerMessage" aria-live="polite"><strong>Your plan will appear here.</strong>Enter your desired target and daily lecture count.</div>
-        <p class="note">Estimate starts from your projected attendance above, including your planned absences and upcoming lectures. Assumes you attend every counted lecture during recovery, each lecture has equal weight, and the daily lecture count stays consistent.</p>
-      </div>
-    </section></section><div class="footer"><strong>BunkMeter</strong> · Know Your Bunk Limit ·<br><span style="display:inline-block;margin-top:9px">Created by <a href="https://in.linkedin.com/in/vipinprajapati7348" target="_blank" rel="noopener noreferrer">Vipin Prajapati</a></span></div>
-  </main>
-</div>
-<script src="script.js" defer></script>
 </body>
 </html>
+```
