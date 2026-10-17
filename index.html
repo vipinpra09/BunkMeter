@@ -294,7 +294,7 @@
                                 type="number"
                                 min="1"
                                 max="100"
-                                step="1"
+                                step="5"
                                 value="75"
                                 inputmode="decimal"
                                 aria-label="Required attendance percentage"
@@ -305,9 +305,16 @@
 
                         <div
                             class="target-presets"
-                            aria-label="Quick attendance targets">
-                            <button type="button" data-target="65" class="selected">65%</button>
-                            <button type="button" data-target="75">75%</button>
+                            aria-label="Quick attendance targets"
+                        >
+                            <button type="button" data-target="65">65%</button>
+                            <button
+                                type="button"
+                                data-target="75"
+                                class="selected"
+                            >
+                                75%
+                            </button>
                             <button type="button" data-target="80">80%</button>
                             <button type="button" data-target="85">85%</button>
                             <button type="button" data-target="90">90%</button>
