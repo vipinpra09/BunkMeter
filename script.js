@@ -22,7 +22,7 @@
    const pct = projectedAttended / projectedTotal * 100;
    latestProjection = { attended: projectedAttended, total: projectedTotal, pct };
    const current = a / t * 100;
-   const maxMiss = Math.max(-1, Math.floor((a / target) - t + 1e-10));
+   const maxMiss = target >= 1 ? 0 : Math.max(0, Math.floor((projectedAttended / target) - projectedTotal + 1e-10));
    const gap = pct - target * 100;
    const recover = pct >= target*100 ? 0 : (target >= 1 ? Infinity : Math.max(0, Math.ceil((target*projectedTotal-projectedAttended)/(1-target))));
    $('resultTitle').textContent = title; $('resultSub').textContent = mode === 'day' ? `${missed} lectures missed · ${future} lectures attended` : 'Your projected attendance';
