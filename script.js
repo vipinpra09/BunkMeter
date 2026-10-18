@@ -22,7 +22,9 @@
    const pct = projectedAttended / projectedTotal * 100;
    latestProjection = { attended: projectedAttended, total: projectedTotal, pct };
    const current = a / t * 100;
-   const maxMiss = pct + 1e-10 < target * 100 || target >= 1 ? 0 : Math.max(0, Math.floor((projectedAttended / target) - projectedTotal + 1e-10));
+   // This metric describes the student's current bunk allowance, not the projected scenario.
+   // If current attendance is below the required percentage, no additional lectures can be missed.
+   const maxMiss = current + 1e-10 < targetValue || target >= 1 ? 0 : Math.max(0, Math.floor((a / target) - t + 1e-10));
    const gap = pct - target * 100;
    const recover = pct >= target*100 ? 0 : (target >= 1 ? Infinity : Math.max(0, Math.ceil((target*projectedTotal-projectedAttended)/(1-target))));
    $('resultTitle').textContent = title; $('resultSub').textContent = mode === 'day' ? `${missed} lectures missed · ${future} lectures attended` : 'Your projected attendance';
@@ -30,7 +32,7 @@
    $('progressFill').style.width = Math.min(100, pct) + '%'; $('progressFill').classList.toggle('bad', pct < target*100);
    $('targetLabel').textContent = `Required: ${(target*100).toFixed(0)}%`;
    $('status').textContent = pct >= target*100 ? 'Above minimum' : 'Below minimum'; $('status').classList.toggle('danger', pct < target*100);
-   $('currentMetric').textContent = current.toFixed(2) + '%'; $('maxMissMetric').textContent = maxMiss < 0 ? '0' : maxMiss;
+   $('currentMetric').textContent = current.toFixed(2) + '%'; $('maxMissMetric').textContent = maxMiss;
    $('attendedMetric').textContent = `${projectedAttended} / ${projectedTotal}`; $('gapMetric').textContent = `${gap >= 0 ? '+' : ''}${gap.toFixed(2)}%`;
    if (pct >= target*100) { $('advice').innerHTML = `<strong>You're within your limit.</strong>Your projected attendance is ${pct.toFixed(2)}%, which is ${(pct-target*100).toFixed(2)} percentage points above the minimum.`; }
    else { $('advice').innerHTML = `<strong>Careful — you'll fall below the minimum.</strong>Your projected attendance is ${pct.toFixed(2)}%. You need to attend ${Math.max(0,Math.ceil((target*projectedTotal-projectedAttended)/(1-target)))} consecutive lectures to recover to ${(target*100).toFixed(0)}%.`; }
