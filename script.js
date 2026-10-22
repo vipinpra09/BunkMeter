@@ -8,7 +8,28 @@
  let latestProjection = null;
  const num = id => Math.max(0, Math.floor(Number($(id).value) || 0));
  function setMode(next) { mode = next; $('lectureMode').classList.toggle('active', mode === 'lecture'); $('dayMode').classList.toggle('active', mode === 'day'); $('lectureFields').classList.toggle('hidden', mode !== 'lecture'); $('dayFields').classList.toggle('hidden', mode !== 'day'); calculate(); }
- function calculate() {
+
+ function renderAttendanceCharts(a,t,targetValue,pct,missed=0,future=0,recover=0) {
+   const svgFor=(withTarget=true)=> {
+     const W=720,H=250,L=48,R=16,T=16,B=32,PW=W-L-R,PH=H-T-B,N=12,range=Math.max(12,Math.ceil(Math.max(t,1)*.3/N)*N);
+     const xs=Array.from({length:N+1},(_,i)=>-range+2*range*i/N);
+     const x=v=>L+(v+range)/(2*range)*PW, y=v=>T+(100-Math.max(0,Math.min(100,v)))/100*PH;
+     const bunk=v=>a/(t+Math.max(0,-v))*100,attend=v=>(a+Math.max(0,v))/(t+Math.max(0,v))*100;
+     const path=fn=>xs.map((v,i)=>(i?'L':'M')+x(v).toFixed(1)+','+y(fn(v)).toFixed(1)).join(' ');
+     let grid='';
+     [0,25,50,75,100].forEach(v=>{grid+=`<line x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}" stroke="currentColor" opacity=".11" stroke-dasharray="3 5"/><text x="${L-9}" y="${y(v)+4}" fill="currentColor" opacity=".65" font-size="11" text-anchor="end">${v}%</text>`;});
+     const tx=y(targetValue),bx=Math.max(-range,Math.min(range,-missed)),ax=Math.max(-range,Math.min(range,future));
+     return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Attendance forecast: pink shows missing lectures, teal shows attending extra lectures, purple dashed line is the target.">${grid}${withTarget?`<line x1="${L}" y1="${tx}" x2="${W-R}" y2="${tx}" stroke="#9b8af8" stroke-width="2" stroke-dasharray="6 5"/><text x="${W-R-3}" y="${Math.max(12,tx-7)}" fill="#9b8af8" font-size="11" text-anchor="end">Target ${targetValue}%</text>`:''}<path d="${path(bunk)}" fill="none" stroke="#ff356b" stroke-width="3" stroke-linecap="round"/><path d="${path(attend)}" fill="none" stroke="#20ad91" stroke-width="3" stroke-linecap="round"/><circle cx="${x(bx)}" cy="${y(bunk(bx))}" r="4.5" fill="#ff356b" stroke="white" stroke-width="2"/><circle cx="${x(ax)}" cy="${y(attend(ax))}" r="4.5" fill="#20ad91" stroke="white" stroke-width="2"/><text x="${L}" y="${H-7}" fill="currentColor" opacity=".7" font-size="11">More bunks</text><text x="${W-R}" y="${H-7}" fill="currentColor" opacity=".7" font-size="11" text-anchor="end">More attended</text></svg>`;
+   };
+   const trend=$('trendChart');if(trend)trend.innerHTML=svgFor();
+   const preview=$('previewChart');if(preview)preview.innerHTML=svgFor(false);
+   const current=a/t*100;
+   ['previewCurrent'].forEach(id=>{const el=$(id);if(el)el.textContent=current.toFixed(2)+'%';});
+   const p=$('previewProjected');if(p)p.textContent=pct.toFixed(2)+'%';
+   const target=$('previewTarget');if(target)target.textContent=targetValue+'%';
+   const recovery=$('previewRecovery');if(recovery)recovery.textContent=Number.isFinite(recover)?String(recover):'—';
+ }
+\n function calculate() {
    const a = num('attended'), t = num('total'), targetValue = Number($('target').value), target = targetValue / 100;
    if (!Number.isFinite(targetValue) || targetValue < 1 || targetValue > 100) { latestProjection = null; $('resultTitle').textContent = 'Check required attendance'; $('resultSub').textContent = 'Enter a percentage from 1 to 100.'; $('percentage').textContent = '—'; $('status').textContent = 'Invalid target'; $('status').classList.add('danger'); $('advice').innerHTML = '<strong>Required attendance must be between 1% and 100%.</strong>You can type your own percentage in the target field.'; return; }
    $('status').classList.remove('danger');
@@ -27,7 +48,7 @@
    const maxMiss = current + 1e-10 < targetValue || target >= 1 ? 0 : Math.max(0, Math.floor((a / target) - t + 1e-10));
    const gap = pct - target * 100;
    const recover = pct >= target*100 ? 0 : (target >= 1 ? Infinity : Math.max(0, Math.ceil((target*projectedTotal-projectedAttended)/(1-target))));
-   $('resultTitle').textContent = title; $('resultSub').textContent = mode === 'day' ? `${missed} lectures missed · ${future} lectures attended` : 'Your projected attendance';
+   renderAttendanceCharts(a,t,targetValue,pct,missed,future,recover);\n   $('resultTitle').textContent = title; $('resultSub').textContent = mode === 'day' ? `${missed} lectures missed · ${future} lectures attended` : 'Your projected attendance';
    $('percentage').textContent = pct.toFixed(2) + '%'; $('percentage').className = 'big-number ' + (pct >= target*100 ? 'good' : 'bad');
    $('progressFill').style.width = Math.min(100, pct) + '%'; $('progressFill').classList.toggle('bad', pct < target*100);
    $('targetLabel').textContent = `Required: ${(target*100).toFixed(0)}%`;
