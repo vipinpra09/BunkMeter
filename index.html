@@ -206,7 +206,22 @@
 
                 </div>
 
-                <!-- How It Works -->
+
+                <section class="dashboard-preview" aria-label="BunkMeter attendance analytics preview">
+                    <div class="dashboard-chrome"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><div class="dashboard-breadcrumb"><strong>BunkMeter</strong><span>›</span><span>Attendance overview</span></div><span class="dashboard-chip">LIVE PREVIEW</span></div>
+                    <div class="dashboard-toolbar"><div class="dashboard-product"><span class="mini-logo">B</span><div><strong>Attendance Analytics</strong><small>Your semester at a glance</small></div></div><a class="dashboard-open" href="?page=calculator">Open calculator <span aria-hidden="true">↗</span></a></div>
+                    <div class="dashboard-stats">
+                        <article><span>Current attendance</span><strong id="previewCurrent">80.00%</strong><small class="stat-positive">Based on your entries</small></article>
+                        <article><span>Projected attendance</span><strong id="previewProjected">75.00%</strong><small>After planned lectures</small></article>
+                        <article><span>Required target</span><strong id="previewTarget">75%</strong><small>Adjust in calculator</small></article>
+                        <article><span>Lectures to recover</span><strong id="previewRecovery">0</strong><small>To reach your target</small></article>
+                    </div>
+                    <div class="dashboard-chart-wrap"><div class="dashboard-chart-head"><div><strong>Attendance trend simulator</strong><p>See how each missed or attended lecture changes your percentage.</p></div><span class="chart-legend"><i class="legend-bunk"></i> Miss lectures <i class="legend-attend"></i> Attend lectures</span></div>
+                        <div class="attendance-chart" id="previewChart" role="img" aria-label="Attendance percentage as lectures are missed or attended"><svg viewBox="0 0 720 220" aria-hidden="true"><path d="M42 20V180H700" fill="none" stroke="#e7e8ef"/><path d="M42 60H700M42 100H700M42 140H700" stroke="#eff0f5" stroke-dasharray="3 5"/><path d="M42 85 C150 95 220 100 300 120 S500 155 700 178" fill="none" stroke="#ff356b" stroke-width="3" stroke-linecap="round"/><path d="M42 85 C150 70 220 55 300 45 S500 25 700 15" fill="none" stroke="#20ad91" stroke-width="3" stroke-linecap="round"/></svg></div>
+                        <div class="chart-axis-labels"><span>0 lectures changed</span><span>More lectures →</span></div>
+                    </div>
+                </section>
+\n                <!-- How It Works -->
                 <section id="how-it-works">
                     <h2 class="section-heading" style="margin-top:30px">
                         How BunkMeter Works
