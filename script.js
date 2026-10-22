@@ -29,7 +29,8 @@
    const target=$('previewTarget');if(target)target.textContent=targetValue+'%';
    const recovery=$('previewRecovery');if(recovery)recovery.textContent=Number.isFinite(recover)?String(recover):'—';
  }
-\n function calculate() {
+
+ function calculate() {
    const a = num('attended'), t = num('total'), targetValue = Number($('target').value), target = targetValue / 100;
    if (!Number.isFinite(targetValue) || targetValue < 1 || targetValue > 100) { latestProjection = null; $('resultTitle').textContent = 'Check required attendance'; $('resultSub').textContent = 'Enter a percentage from 1 to 100.'; $('percentage').textContent = '—'; $('status').textContent = 'Invalid target'; $('status').classList.add('danger'); $('advice').innerHTML = '<strong>Required attendance must be between 1% and 100%.</strong>You can type your own percentage in the target field.'; return; }
    $('status').classList.remove('danger');
