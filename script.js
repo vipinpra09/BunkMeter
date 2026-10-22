@@ -48,7 +48,8 @@
    const maxMiss = current + 1e-10 < targetValue || target >= 1 ? 0 : Math.max(0, Math.floor((a / target) - t + 1e-10));
    const gap = pct - target * 100;
    const recover = pct >= target*100 ? 0 : (target >= 1 ? Infinity : Math.max(0, Math.ceil((target*projectedTotal-projectedAttended)/(1-target))));
-   renderAttendanceCharts(a,t,targetValue,pct,missed,future,recover);\n   $('resultTitle').textContent = title; $('resultSub').textContent = mode === 'day' ? `${missed} lectures missed · ${future} lectures attended` : 'Your projected attendance';
+   renderAttendanceCharts(a,t,targetValue,pct,missed,future,recover);
+   $('resultTitle').textContent = title; $('resultSub').textContent = mode === 'day' ? `${missed} lectures missed · ${future} lectures attended` : 'Your projected attendance';
    $('percentage').textContent = pct.toFixed(2) + '%'; $('percentage').className = 'big-number ' + (pct >= target*100 ? 'good' : 'bad');
    $('progressFill').style.width = Math.min(100, pct) + '%'; $('progressFill').classList.toggle('bad', pct < target*100);
    $('targetLabel').textContent = `Required: ${(target*100).toFixed(0)}%`;
