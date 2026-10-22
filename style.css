@@ -308,3 +308,10 @@ body.calculator-page .back-home { display: inline-flex !important; }
 .trend-legend{justify-content:flex-start;flex-wrap:wrap;margin:16px 0 4px}.trend-chart svg{display:block;width:100%;height:auto;overflow:visible}.trend-foot{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px;margin-top:4px}
 @media(max-width:760px){.dashboard-preview{margin:10px auto 28px;border-radius:15px}.dashboard-chrome{padding:11px 12px;gap:10px}.dashboard-breadcrumb{gap:6px;font-size:10px}.dashboard-toolbar{padding:14px 12px}.dashboard-stats{margin:0 12px;grid-template-columns:1fr 1fr}.dashboard-stats article{padding:12px;border-bottom:1px solid var(--border)}.dashboard-stats article:nth-child(2){border-right:0}.dashboard-stats article:nth-child(3),.dashboard-stats article:nth-child(4){border-bottom:0}.dashboard-chart-wrap{margin:12px}.dashboard-chart-head{align-items:flex-start;flex-direction:column}.chart-legend{white-space:normal;flex-wrap:wrap}.trend-card{padding:14px}}
 @media(max-width:420px){.dashboard-chip{display:none}.dashboard-open{font-size:10px;padding:9px}.dashboard-stats strong{font-size:19px}}
+
+/* BunkMeter brand logo */
+.logo-image { display:block; width:46px; height:46px; flex:0 0 46px; object-fit:contain; }
+.brand-wordmark { color:var(--text); }
+.brand-wordmark span { color:var(--pink); }
+.brand { gap:10px; text-decoration:none; }
+@media(max-width:480px) { .logo-image { width:39px; height:39px; flex-basis:39px; } .brand { gap:8px; font-size:18px; } }
