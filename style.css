@@ -359,3 +359,42 @@ input::placeholder { color:var(--muted); opacity:1; }
   .hero-art svg { filter:drop-shadow(0 14px 18px #00000045); }
   .card, .step, .target-box { box-shadow:0 8px 28px #00000020; }
 }
+
+
+/* Refined attendance graph: adaptive grid, legible axes, current-position marker and smooth filled curves */
+.trend-card { padding:20px; }
+.trend-heading h3 { font-size:16px; }
+.trend-heading p { max-width:520px; }
+.trend-live { display:inline-flex;align-items:center;gap:6px; }
+.trend-live::before { content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px light-dark(#d7f5e9,#1c4b3d); }
+.trend-legend { gap:14px;margin:18px 0 8px;font-size:11px; }
+.trend-legend span { display:inline-flex;align-items:center;gap:6px; }
+.trend-chart { border-radius:12px;background:light-dark(#fbfcff,#151720);border:1px solid var(--border);padding:8px 8px 0;overflow:hidden; }
+.trend-chart svg,.attendance-chart svg { display:block;width:100%;height:auto;min-height:190px;overflow:visible; }
+.chart-grid { stroke:currentColor;stroke-opacity:.12;stroke-dasharray:3 6; }
+.chart-grid-vertical { stroke-opacity:.06;stroke-dasharray:2 7; }
+.chart-y-label,.chart-x-label { fill:var(--muted);font-size:11px; }
+.chart-axis-caption { fill:var(--muted);font-size:11px;font-weight:600; }
+.chart-target-line { stroke:#9b8af8;stroke-width:2;stroke-dasharray:7 5; }
+.chart-target-label { fill:#9b8af8;font-size:11px;font-weight:700; }
+.chart-current-line { stroke:currentColor;stroke-opacity:.34;stroke-width:1.5;stroke-dasharray:3 4; }
+.chart-line { fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round; }
+.chart-line-bunk { stroke:#ff356b; }
+.chart-line-attend { stroke:#20ad91; }
+.chart-point { stroke:var(--surface);stroke-width:2.5; }
+.chart-point-bunk { fill:#ff356b; }
+.chart-point-attend { fill:#20ad91; }
+.chart-current-halo { fill:var(--surface);stroke:currentColor;stroke-opacity:.55;stroke-width:1.5; }
+.chart-current-dot { fill:var(--text); }
+.trend-foot { font-size:11px;margin:10px 2px 0; }
+.trend-card .note { margin:12px 2px 0;line-height:1.55; }
+.attendance-chart { background:light-dark(#fbfcff,#151720); }
+@media(max-width:600px) {
+ .trend-card { padding:13px; }
+ .trend-heading { align-items:flex-start; }
+ .trend-heading h3 { font-size:14px; }
+ .trend-legend { gap:10px;font-size:10px; }
+ .trend-chart { padding:4px 2px 0; }
+ .trend-chart svg,.attendance-chart svg { min-height:145px; }
+ .chart-y-label,.chart-x-label,.chart-axis-caption,.chart-target-label { font-size:10px; }
+}
