@@ -1,5 +1,11 @@
 (() => {
  const $ = id => document.getElementById(id);
+ // Always return to the published landing page, removing the calculator query string.
+ const homeLink = document.querySelector('.back-home');
+ if (homeLink) homeLink.addEventListener('click', event => {
+   event.preventDefault();
+   window.location.assign(window.location.pathname.replace(/[^/]*$/, 'index.html'));
+ });
  const params = new URLSearchParams(window.location.search);
  const useFreeLink = $('useFree');
  if (useFreeLink) useFreeLink.href = window.location.pathname + '?page=calculator';
