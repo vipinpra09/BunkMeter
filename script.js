@@ -17,20 +17,37 @@
 
  function renderAttendanceCharts(a,t,targetValue,pct,missed=0,future=0,recover=0) {
    const svgFor=(withTarget=true)=> {
-     const W=720,H=250,L=48,R=16,T=16,B=32,PW=W-L-R,PH=H-T-B,N=12,range=Math.max(12,Math.ceil(Math.max(t,1)*.3/N)*N);
+     const W=760,H=286,L=54,R=22,T=22,B=48,PW=W-L-R,PH=H-T-B,N=24;
+     const range=Math.max(12,Math.ceil(Math.max(t*.3,missed,future,1)/N)*N);
      const xs=Array.from({length:N+1},(_,i)=>-range+2*range*i/N);
-     const x=v=>L+(v+range)/(2*range)*PW, y=v=>T+(100-Math.max(0,Math.min(100,v)))/100*PH;
-     const bunk=v=>a/(t+Math.max(0,-v))*100,attend=v=>(a+Math.max(0,v))/(t+Math.max(0,v))*100;
+     const x=v=>L+(v+range)/(2*range)*PW;
+     const y=v=>T+(100-Math.max(0,Math.min(100,v)))/100*PH;
+     const bunk=v=>a/(t+Math.max(0,-v))*100;
+     const attend=v=>(a+Math.max(0,v))/(t+Math.max(0,v))*100;
      const path=fn=>xs.map((v,i)=>(i?'L':'M')+x(v).toFixed(1)+','+y(fn(v)).toFixed(1)).join(' ');
+     const area=fn=>path(fn)+` L${x(range).toFixed(1)},${y(0).toFixed(1)} L${x(-range).toFixed(1)},${y(0).toFixed(1)} Z`;
      let grid='';
-     [0,25,50,75,100].forEach(v=>{grid+=`<line x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}" stroke="currentColor" opacity=".11" stroke-dasharray="3 5"/><text x="${L-9}" y="${y(v)+4}" fill="currentColor" opacity=".65" font-size="11" text-anchor="end">${v}%</text>`;});
-     const tx=y(targetValue),bx=Math.max(-range,Math.min(range,-missed)),ax=Math.max(-range,Math.min(range,future));
-     return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Attendance forecast: pink shows missing lectures, teal shows attending extra lectures, purple dashed line is the target.">${grid}${withTarget?`<line x1="${L}" y1="${tx}" x2="${W-R}" y2="${tx}" stroke="#9b8af8" stroke-width="2" stroke-dasharray="6 5"/><text x="${W-R-3}" y="${Math.max(12,tx-7)}" fill="#9b8af8" font-size="11" text-anchor="end">Target ${targetValue}%</text>`:''}<path d="${path(bunk)}" fill="none" stroke="#ff356b" stroke-width="3" stroke-linecap="round"/><path d="${path(attend)}" fill="none" stroke="#20ad91" stroke-width="3" stroke-linecap="round"/><circle cx="${x(bx)}" cy="${y(bunk(bx))}" r="4.5" fill="#ff356b" stroke="white" stroke-width="2"/><circle cx="${x(ax)}" cy="${y(attend(ax))}" r="4.5" fill="#20ad91" stroke="white" stroke-width="2"/><text x="${L}" y="${H-7}" fill="currentColor" opacity=".7" font-size="11">More bunks</text><text x="${W-R}" y="${H-7}" fill="currentColor" opacity=".7" font-size="11" text-anchor="end">More attended</text></svg>`;
+     [0,25,50,75,100].forEach(v=>{grid+=`<line x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}" class="chart-grid"/><text x="${L-12}" y="${y(v)+4}" class="chart-y-label" text-anchor="end">${v}%</text>`;});
+     const ticks=[-range,-Math.round(range/2),0,Math.round(range/2),range];
+     ticks.forEach(v=>{grid+=`<line x1="${x(v)}" y1="${T}" x2="${x(v)}" y2="${H-B}" class="chart-grid chart-grid-vertical"/><text x="${x(v)}" y="${H-25}" class="chart-x-label" text-anchor="middle">${v>0?'+':''}${v}</text>`;});
+     const tx=y(targetValue),bx=Math.max(-range,Math.min(range,-missed)),ax=Math.max(-range,Math.min(range,future)),cx=x(0),cy=y(a/t*100);
+     return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Attendance forecast. The pink curve shows attendance if lectures are missed, the teal curve shows attendance if extra lectures are attended, and the dashed purple line is the required target.">
+       <defs><linearGradient id="bunkArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff356b" stop-opacity=".22"/><stop offset="100%" stop-color="#ff356b" stop-opacity="0"/></linearGradient><linearGradient id="attendArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#20ad91" stop-opacity=".2"/><stop offset="100%" stop-color="#20ad91" stop-opacity="0"/></linearGradient></defs>
+       ${grid}
+       <line x1="${cx}" y1="${T}" x2="${cx}" y2="${H-B}" class="chart-current-line"/>
+       ${withTarget?`<line x1="${L}" y1="${tx}" x2="${W-R}" y2="${tx}" class="chart-target-line"/><text x="${W-R-2}" y="${Math.max(13,tx-8)}" class="chart-target-label" text-anchor="end">Target ${targetValue}%</text>`:''}
+       <path d="${area(bunk)}" fill="url(#bunkArea)"/><path d="${area(attend)}" fill="url(#attendArea)"/>
+       <path d="${path(bunk)}" class="chart-line chart-line-bunk"/><path d="${path(attend)}" class="chart-line chart-line-attend"/>
+       <circle cx="${cx}" cy="${cy}" r="7" class="chart-current-halo"/><circle cx="${cx}" cy="${cy}" r="4" class="chart-current-dot"/>
+       <circle cx="${x(bx)}" cy="${y(bunk(bx))}" r="5" class="chart-point chart-point-bunk"><title>After ${Math.abs(bx)} missed lectures: ${bunk(bx).toFixed(2)}%</title></circle>
+       <circle cx="${x(ax)}" cy="${y(attend(ax))}" r="5" class="chart-point chart-point-attend"><title>After ${ax} extra attended lectures: ${attend(ax).toFixed(2)}%</title></circle>
+       <text x="${L}" y="${H-7}" class="chart-axis-caption">Missed lectures</text><text x="${W-R}" y="${H-7}" class="chart-axis-caption" text-anchor="end">Extra attended lectures</text>
+     </svg>`;
    };
    const trend=$('trendChart');if(trend)trend.innerHTML=svgFor();
    const preview=$('previewChart');if(preview)preview.innerHTML=svgFor(false);
    const current=a/t*100;
-   ['previewCurrent'].forEach(id=>{const el=$(id);if(el)el.textContent=current.toFixed(2)+'%';});
+   const currentEl=$('previewCurrent');if(currentEl)currentEl.textContent=current.toFixed(2)+'%';
    const p=$('previewProjected');if(p)p.textContent=pct.toFixed(2)+'%';
    const target=$('previewTarget');if(target)target.textContent=targetValue+'%';
    const recovery=$('previewRecovery');if(recovery)recovery.textContent=Number.isFinite(recover)?String(recover):'—';
