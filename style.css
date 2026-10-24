@@ -315,3 +315,47 @@ body.calculator-page .back-home { display: inline-flex !important; }
 .brand-wordmark span { color:var(--pink); }
 .brand { gap:10px; text-decoration:none; }
 @media(max-width:480px) { .logo-image { width:39px; height:39px; flex-basis:39px; } .brand { gap:8px; font-size:18px; } }
+
+
+/* Accessible light/dark system themes: consistent surfaces and readable contrast */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f7f8fc, #101116);
+  --surface: light-dark(#ffffff, #191b23);
+  --surface2: light-dark(#f0f2f8, #232631);
+  --text: light-dark(#171923, #f4f5fa);
+  --muted: light-dark(#5f6575, #b0b5c5);
+  --border: light-dark(#e0e3ec, #343744);
+  --blue: light-dark(#315ce8, #9bb4ff);
+  --blue2: light-dark(#e9efff, #293451);
+  --green: light-dark(#137b50, #64e0a4);
+  --red: light-dark(#c42f4d, #ff879e);
+  --pink: light-dark(#d91f5b, #ff5a8a);
+  --shadow-soft: 0 18px 50px light-dark(#14264a0b, #00000030);
+}
+body, #app { background:var(--bg); color:var(--text); }
+.topbar { background:light-dark(#ffffffed,#15161dee); border-bottom-color:var(--border); }
+.landing-hero {
+  background:
+    radial-gradient(ellipse at 82% 14%, light-dark(#ffe0ea,#402033), transparent 48%),
+    radial-gradient(ellipse at 10% 100%, light-dark(#f0f2ff,#202235), transparent 42%),
+    var(--surface);
+}
+.landing-hero h1 span { color:var(--pink) !important; }
+.eyebrow { color:var(--pink); }
+.cta { color:var(--text); background:var(--surface); border-color:var(--border); }
+.cta.primary-cta, .primary { color:#fff; background:var(--pink); border-color:var(--pink); }
+.cta.primary-cta:hover, .primary:hover { background:light-dark(#bd174c,#ff7098); }
+.brand-wordmark span { color:var(--pink); }
+.dashboard-preview, .dashboard-chart-wrap, .trend-card { background:var(--surface); border-color:var(--border); color:var(--text); }
+.dashboard-chrome { background:var(--surface2); }
+.dashboard-chip { background:light-dark(#fff0f4,#402033); color:var(--pink); }
+.dashboard-open { color:var(--pink); border-color:light-dark(#f4b8ca,#714055); }
+input, select { background:var(--surface); color:var(--text); border-color:var(--border); }
+input::placeholder { color:var(--muted); opacity:1; }
+::selection { background:light-dark(#ffc6d8,#71314a); color:var(--text); }
+:focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+@media (prefers-color-scheme: dark) {
+  .hero-art svg { filter:drop-shadow(0 14px 18px #00000045); }
+  .card, .step, .target-box { box-shadow:0 8px 28px #00000020; }
+}
