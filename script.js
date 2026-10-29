@@ -13,7 +13,7 @@
  let mode = 'lecture';
  let latestProjection = null;
  const num = id => Math.max(0, Math.floor(Number($(id).value) || 0));
- function setMode(next) { mode = next; $('lectureMode').classList.toggle('active', mode === 'lecture'); $('dayMode').classList.toggle('active', mode === 'day'); $('lectureFields').classList.toggle('hidden', mode !== 'lecture'); $('dayFields').classList.toggle('hidden', mode !== 'day'); calculate(); }
+ function setMode(next) { mode = next; $('lectureMode').classList.toggle('active', mode === 'lecture'); $('dayMode').classList.toggle('active', mode === 'day'); $('lectureFields').classList.toggle('hidden', mode !== 'lecture'); $('dayFields').classList.toggle('hidden', mode !== 'day'); }
 
  function renderAttendanceCharts(a,t,targetValue,pct,missed=0,future=0,recover=0) {
    const svgFor=(withTarget=true)=> {
@@ -117,9 +117,16 @@
    message.innerHTML = `<strong>Recovery plan from ${pct.toFixed(2)}% to ${goalValue}%.</strong>Attend ${lectures} lectures without missing any. At ${perDay} lectures per day, that is about ${days} college day${days===1?'':'s'} (the final day may require fewer than ${perDay} lectures). Estimated attendance after recovery: ${finalPct.toFixed(2)}%.`;
  }
  $('planRecovery').addEventListener('click', planRecovery);
- ['goalAttendance','recoveryPerDay'].forEach(id => $(id).addEventListener('input', planRecovery));
- $('lectureMode').addEventListener('click', () => setMode('lecture')); $('dayMode').addEventListener('click', () => setMode('day')); $('calculate').addEventListener('click', () => { calculate(); planRecovery(); }); $('target').addEventListener('input', () => { calculate(); planRecovery(); });
- document.querySelectorAll('[data-target]').forEach(btn => btn.addEventListener('click', () => { $('target').value = btn.dataset.target; calculate(); planRecovery(); }));
- ['attended','total','missLectures','attendLectures','perDay','missDays','attendDays'].forEach(id => $(id).addEventListener('input', () => { calculate(); planRecovery(); }));
- calculate(); planRecovery();
+ $('lectureMode').addEventListener('click', () => setMode('lecture')); $('dayMode').addEventListener('click', () => setMode('day'));
+ $('calculate').addEventListener('click', calculate);
+ document.querySelectorAll('[data-target]').forEach(btn => btn.addEventListener('click', () => { $('target').value = btn.dataset.target; document.querySelectorAll('[data-target]').forEach(b => b.classList.toggle('selected', b === btn)); }));
+ // Inputs only update when the user explicitly taps a calculation button.
+ $('resultTitle').textContent = 'Ready to calculate';
+ $('resultSub').textContent = 'Enter your attendance details, then tap Calculate My Attendance.';
+ $('percentage').textContent = '—';
+ $('status').textContent = 'Awaiting input';
+ $('status').classList.remove('danger');
+ $('currentMetric').textContent = '—'; $('maxMissMetric').textContent = '—'; $('attendedMetric').textContent = '—'; $('gapMetric').textContent = '—';
+ $('advice').innerHTML = '<strong>Your results will appear here.</strong>Update the inputs above and tap Calculate My Attendance when you are ready.';
+ $('recoveryText').textContent = 'Calculate your attendance first, then use the recovery planner when you want a recovery estimate.';
 })();
