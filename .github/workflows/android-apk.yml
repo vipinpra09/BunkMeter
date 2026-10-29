@@ -5,6 +5,9 @@ on:
   push:
     paths:
       - 'android-app/**'
+      - 'index.html'
+      - 'script.js'
+      - 'style.css'
       - '.github/workflows/android-apk.yml'
     branches:
       - main
