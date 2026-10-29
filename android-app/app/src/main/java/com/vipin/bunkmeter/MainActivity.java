@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity {
     private WebView webView;
-    private static final String HOME_URL = "https://vipinpra09.github.io/BunkMeter/?page=calculator";
+    private static final String HOME_URL = "file:///android_asset/www/index.html?page=calculator";
     private static final String APP_STYLE = "var s=document.createElement('style');s.textContent=" +
         "'body.calculator-page{background:#f5f7fc!important}' +" +
         "'body.calculator-page .topbar,body.calculator-page .footer,body.calculator-page .back-home,body.calculator-page .pill{display:none!important}' +" +
@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         webView.setBackgroundColor(Color.rgb(245, 247, 252));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setAllowFileAccess(false);
+        webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setAllowContentAccess(false);
         webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         webView.setWebChromeClient(new WebChromeClient());
