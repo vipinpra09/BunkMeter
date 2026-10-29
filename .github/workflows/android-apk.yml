@@ -34,6 +34,11 @@ jobs:
         uses: gradle/gradle-build-action@v3
         with:
           gradle-version: '8.9'
+      - name: Bundle website files into Android app
+        run: |
+          mkdir -p app/src/main/assets/www/assets
+          cp ../index.html ../script.js ../style.css app/src/main/assets/www/
+          cp -R ../assets/. app/src/main/assets/www/assets/
       - name: Build debug APK
         run: gradle assembleDebug
       - name: Upload APK artifact
